@@ -10,3 +10,7 @@
   from = "/mcp"
   status = 200
   to = "/.netlify/functions/express-mcp-server"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
