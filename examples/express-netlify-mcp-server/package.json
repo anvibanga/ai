@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node src/index.ts",
-    "build:functions": "tsc --project tsconfig.json --outDir netlify/functions --module commonjs"
+    "build:functions": "tsc --project tsconfig.json --outDir netlify/functions --module commonjs",
+    "build": "npm run build:functions"
   },
   "keywords": [],
   "author": "",
