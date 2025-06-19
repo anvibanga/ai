@@ -9,7 +9,7 @@
     "build": "tsc && shx cp -r netlify/functions build/",
     "watch": "tsc --watch",
     "start": "node build/index.js",
-    "prepare": "pnpm run build",
+    "prepare": "npm run build",
     "dev": "concurrently \"npm run watch\" \"nodemon --watch build build/index.js\""
   },
   "files": [
