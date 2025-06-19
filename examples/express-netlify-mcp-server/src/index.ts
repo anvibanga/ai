@@ -21,7 +21,7 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 // Initialize Express app
-const app = express();
+export const app = express();
 
 // Middleware setup
 app.use(express.json());
@@ -76,6 +76,11 @@ const methodNotAllowed = (req: Request, res: Response) => {
         id: null
     });
 };
+
+// Handle OPTIONS requests explicitly
+app.options('/mcp', (req: Request, res: Response) => {
+    res.status(204).end();
+});
 
 app.get('/mcp', methodNotAllowed);
 app.delete('/mcp', methodNotAllowed);

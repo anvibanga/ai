@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && shx chmod +x build/*.js",
+    "build": "tsc && shx cp -r netlify/functions build/",
     "watch": "tsc --watch",
     "start": "node build/index.js",
     "prepare": "pnpm run build",
@@ -22,10 +22,12 @@
     "@descope/mcp-express": "^1.0.4",
     "@descope/node-sdk": "^1.6.13",
     "@modelcontextprotocol/sdk": "^1.10.0",
+    "@netlify/functions": "^4.1.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "node-fetch": "^3.3.2",
+    "serverless-http": "^3.2.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
