@@ -2,9 +2,25 @@ import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/
 import { toFetchResponse, toReqRes } from "fetch-to-node";
 import { createServer } from "../../src/create-server.js";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Authorization, Origin, Content-Type, Accept, X-Requested-With",
+  "Access-Control-Allow-Credentials": "true",
+  "Access-Control-Max-Age": "86400"
+};
+
 // Netlify serverless function handler
 export default async (req: Request) => {
   try {
+    // Handle preflight requests
+    if (req.method === "OPTIONS") {
+      return new Response(null, {
+        status: 204,
+        headers: corsHeaders
+      });
+    }
+
     // Handle different HTTP methods
     if (req.method === "POST") {
       return handleMCPPost(req);
@@ -13,7 +29,10 @@ export default async (req: Request) => {
     } else if (req.method === "DELETE") {
       return handleMCPDelete();
     } else {
-      return new Response("Method not allowed", { status: 405 });
+      return new Response("Method not allowed", { 
+        status: 405,
+        headers: corsHeaders
+      });
     }
   } catch (error) {
     console.error("MCP error:", error);
@@ -28,7 +47,10 @@ export default async (req: Request) => {
       }),
       {
         status: 500,
-        headers: { "Content-Type": "application/json" }
+        headers: { 
+          ...corsHeaders,
+          "Content-Type": "application/json" 
+        }
       }
     );
   }
@@ -54,7 +76,18 @@ async function handleMCPPost(req: Request) {
     server.close();
   });
 
-  return toFetchResponse(nodeRes);
+  const response = await toFetchResponse(nodeRes);
+  // Add CORS headers to the response
+  const newHeaders = new Headers(response.headers);
+  Object.entries(corsHeaders).forEach(([key, value]) => {
+    newHeaders.set(key, value);
+  });
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: newHeaders
+  });
 }
 
 function handleMCPGet() {
@@ -70,7 +103,10 @@ function handleMCPGet() {
     }),
     {
       status: 405,
-      headers: { "Content-Type": "application/json" }
+      headers: { 
+        ...corsHeaders,
+        "Content-Type": "application/json" 
+      }
     }
   );
 }
@@ -88,7 +124,10 @@ function handleMCPDelete() {
     }),
     {
       status: 405,
-      headers: { "Content-Type": "application/json" }
+      headers: { 
+        ...corsHeaders,
+        "Content-Type": "application/json" 
+      }
     }
   );
 }
