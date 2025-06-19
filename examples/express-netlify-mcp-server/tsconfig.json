@@ -15,7 +15,7 @@
     "sourceMap": true
   },
   "include": [
-    "src/**/*",
+    "netlify/src/**/*",
     "netlify/functions/**/*"
   ],
   "exclude": [

@@ -20,12 +20,8 @@
     Access-Control-Max-Age = "86400"
 
 [[redirects]]
-  from = "/mcp"
-  to = "/.netlify/functions/index"
-  status = 200
   force = true
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/mcp"
   status = 200
+  to = "/.netlify/functions/src"
+  
