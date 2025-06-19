@@ -40,13 +40,13 @@ SERVER_URL=             # The URL where your server is hosted
 Then, install dependencies:
 
 ```bash
-npm i
+pnpm i
 ```
 
 Finally, run the server:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 The server will start on port 3000 (or the port specified in your environment variables).

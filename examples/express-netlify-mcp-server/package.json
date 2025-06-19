@@ -1,30 +1,40 @@
 {
-  "name": "weather-mcp-server",
+  "name": "express-mcp-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Express MCP Server with Streamable HTTP Transport and Descope Auth",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node src/index.ts",
-    "build:functions": "tsc --project tsconfig.json --outDir netlify/functions --module commonjs",
-    "build": "npm run build:functions"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && shx chmod +x build/*.js",
+    "watch": "tsc --watch",
+    "start": "node build/index.js",
+    "prepare": "pnpm run build",
+    "dev": "concurrently \"npm run watch\" \"nodemon --watch build build/index.js\""
   },
+  "files": [
+    "build"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
-    "@descope/mcp-express": "*",
-    "@modelcontextprotocol/sdk": "*",
-    "@netlify/functions": "^4.0.0",
+    "@descope/mcp-express": "^1.0.4",
+    "@descope/node-sdk": "^1.6.13",
+    "@modelcontextprotocol/sdk": "^1.10.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "zod": "^3.22.2"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "node-fetch": "^3.3.2",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.0.0",
-    "typescript": "^5.0.0"
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.10.10",
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.9",
+    "shx": "^0.3.4",
+    "typescript": "^5.7.3"
   }
 }

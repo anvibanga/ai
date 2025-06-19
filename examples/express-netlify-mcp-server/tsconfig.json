@@ -1,16 +1,24 @@
 {
-    "compilerOptions": {
-      "target": "ESNext",
-      "module": "commonjs",
-      "outDir": "netlify/functions",
-      "rootDir": "src",
-      "esModuleInterop": true,
-      "moduleResolution": "node",
-      "resolveJsonModule": true,
-      "allowSyntheticDefaultImports": true,
-      "strict": true,
-      "skipLibCheck": true
-    },
-    "include": ["src"]
-  }
-  
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "./build",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "ES2022"
+    ],
+    "sourceMap": true,
+    "declaration": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
