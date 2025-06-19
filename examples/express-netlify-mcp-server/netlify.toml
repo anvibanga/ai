@@ -9,8 +9,6 @@
 [functions]
   directory = "build"
   node_bundler = "esbuild"
-  included_files = ["build/**/*.js"]
-  ignore = "**/*.d.ts"
 
 [[redirects]]
   from = "/api/*"
