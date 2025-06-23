@@ -11,7 +11,7 @@
   node_bundler = "esbuild"
 
 [[headers]]
-  for = "/.netlify/functions/index"
+  for = "/mcp"
   [headers.values]
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
@@ -23,5 +23,5 @@
   force = true
   from = "/mcp"
   status = 200
-  to = "/.netlify/functions/src"
+  to = "/.netlify/functions/index"
   
