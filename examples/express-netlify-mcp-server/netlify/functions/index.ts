@@ -5,9 +5,9 @@ import { createServer } from "../src/create-server.js";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Authorization, Origin, Content-Type, Accept, X-Requested-With",
-  "Access-Control-Allow-Credentials": "true",
-  "Access-Control-Max-Age": "86400"
+  "Access-Control-Allow-Headers": "accept, content-type, referer, sec-ch-ua, sec-ch-ua-mobile, sec-ch-ua-platform, user-agent",
+  "Access-Control-Max-Age": "86400",
+  "Access-Control-Expose-Headers": "content-type"
 };
 
 // Netlify serverless function handler
