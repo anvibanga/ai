@@ -12,15 +12,18 @@ const corsHeaders = {
 
 // Netlify serverless function handler
 export default async (req: Request) => {
-  try {
-    // Handle preflight requests
-    if (req.method === "OPTIONS") {
-      return new Response(null, {
-        status: 204,
-        headers: corsHeaders
-      });
-    }
+  // Always add CORS headers to all responses
+  const responseHeaders = { ...corsHeaders };
 
+  // Handle preflight requests
+  if (req.method === "OPTIONS") {
+    return new Response(null, {
+      status: 204,
+      headers: responseHeaders
+    });
+  }
+
+  try {
     // Handle different HTTP methods
     if (req.method === "POST") {
       return handleMCPPost(req);
@@ -31,7 +34,7 @@ export default async (req: Request) => {
     } else {
       return new Response("Method not allowed", { 
         status: 405,
-        headers: corsHeaders
+        headers: responseHeaders
       });
     }
   } catch (error) {
@@ -48,7 +51,7 @@ export default async (req: Request) => {
       {
         status: 500,
         headers: { 
-          ...corsHeaders,
+          ...responseHeaders,
           "Content-Type": "application/json" 
         }
       }
