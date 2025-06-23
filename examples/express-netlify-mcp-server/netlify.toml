@@ -11,7 +11,7 @@
   node_bundler = "esbuild"
 
 [[headers]]
-  for = "/mcp"
+  for = "/*"
   [headers.values]
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
@@ -20,8 +20,22 @@
     Access-Control-Expose-Headers = "content-type"
 
 [[redirects]]
-  force = true
   from = "/mcp"
-  status = 200
   to = "/.netlify/functions/index"
+  status = 200
+  force = true
+  methods = ["GET", "POST", "PUT", "DELETE"]
+
+[[redirects]]
+  from = "/mcp"
+  to = "/.netlify/functions/index"
+  status = 204
+  force = true
+  methods = ["OPTIONS"]
+  [redirects.headers]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "accept, content-type, referer, sec-ch-ua, sec-ch-ua-mobile, sec-ch-ua-platform, user-agent"
+    Access-Control-Max-Age = "86400"
+    Access-Control-Expose-Headers = "content-type"
   
