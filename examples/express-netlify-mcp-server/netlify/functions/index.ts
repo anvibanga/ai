@@ -26,7 +26,37 @@ export default async (req: Request) => {
   try {
     // Handle different HTTP methods
     if (req.method === "POST") {
-      return handleMCPPost(req);
+      // Convert the Request object into a Node.js Request object
+      const { req: nodeReq, res: nodeRes } = toReqRes(req);
+      const { server } = createServer();
+
+      const transport = new StreamableHTTPServerTransport({
+        sessionIdGenerator: undefined,
+      });
+
+      await server.connect(transport);
+
+      const body = await req.json();
+      await transport.handleRequest(nodeReq, nodeRes, body);
+
+      nodeRes.on("close", () => {
+        console.log("Request closed");
+        transport.close();
+        server.close();
+      });
+
+      const response = await toFetchResponse(nodeRes);
+      // Add CORS headers to the response
+      const newHeaders = new Headers(response.headers);
+      Object.entries(corsHeaders).forEach(([key, value]) => {
+        newHeaders.set(key, value);
+      });
+
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: newHeaders
+      });
     } else if (req.method === "GET") {
       return handleMCPGet();
     } else if (req.method === "DELETE") {
@@ -58,40 +88,6 @@ export default async (req: Request) => {
     );
   }
 };
-
-async function handleMCPPost(req: Request) {
-  // Convert the Request object into a Node.js Request object
-  const { req: nodeReq, res: nodeRes } = toReqRes(req);
-  const { server } = createServer();
-
-  const transport = new StreamableHTTPServerTransport({
-    sessionIdGenerator: undefined,
-  });
-
-  await server.connect(transport);
-
-  const body = await req.json();
-  await transport.handleRequest(nodeReq, nodeRes, body);
-
-  nodeRes.on("close", () => {
-    console.log("Request closed");
-    transport.close();
-    server.close();
-  });
-
-  const response = await toFetchResponse(nodeRes);
-  // Add CORS headers to the response
-  const newHeaders = new Headers(response.headers);
-  Object.entries(corsHeaders).forEach(([key, value]) => {
-    newHeaders.set(key, value);
-  });
-
-  return new Response(response.body, {
-    status: response.status,
-    statusText: response.statusText,
-    headers: newHeaders
-  });
-}
 
 function handleMCPGet() {
   console.log("Received GET MCP request");
