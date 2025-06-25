@@ -1,41 +1,32 @@
 [build]
   publish = "public"
-  command = "npm run build"
 
 [dev]
-  command = "npm run dev"
-  port = 3000
+  publish = "public"
 
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
-    Access-Control-Allow-Headers = "accept, content-type, referer, sec-ch-ua, sec-ch-ua-mobile, sec-ch-ua-platform, user-agent"
-    Access-Control-Max-Age = "86400"
-    Access-Control-Expose-Headers = "content-type"
-
 [[redirects]]
   from = "/mcp"
-  to = "/.netlify/functions/index"
+  to = "/.netlify/functions/express-mcp-server"
   status = 200
   force = true
-  methods = ["GET", "POST", "PUT", "DELETE"]
 
 [[redirects]]
-  from = "/mcp"
-  to = "/.netlify/functions/index"
-  status = 204
+  from = "/.well-known/oauth-authorization-server"
+  to = "/.netlify/functions/express-mcp-server"
+  status = 200
   force = true
-  methods = ["OPTIONS"]
-  [redirects.headers]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
-    Access-Control-Allow-Headers = "accept, content-type, referer, sec-ch-ua, sec-ch-ua-mobile, sec-ch-ua-platform, user-agent"
-    Access-Control-Max-Age = "86400"
-    Access-Control-Expose-Headers = "content-type"
-  
+
+[[redirects]]
+  from = "/.well-known/oauth-protected-resource"
+  to = "/.netlify/functions/express-mcp-server"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
