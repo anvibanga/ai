@@ -7,11 +7,11 @@
     "license": "ISC",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "tsc && shx cp -r netlify/functions build/",
-        "watch": "tsc --watch",
-        "start": "node build/index.js",
-        "prepare": "npm run build",
-        "dev": "concurrently \"npm run watch\" \"nodemon --watch build build/index.js\""
+        "build": "netlify build",
+        "dev": "netlify dev",
+        "start": "netlify dev",
+        "deploy": "netlify deploy --build",
+        "deploy:prod": "netlify deploy --prod --build"
       },
     "dependencies": {
         "@descope/mcp-express": "^1.0.12",
