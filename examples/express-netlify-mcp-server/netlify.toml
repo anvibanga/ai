@@ -26,13 +26,8 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
 [template.environment]
   DESCOPE_PROJECT_ID = "Your Descope Project ID"
   DESCOPE_BASE_URL = "Your Descope Base URL (e.g: `https://api.descope.com`)"
   DESCOPE_MANAGEMENT_KEY = "Your Descope Management Key"
-  SERVER_URL = "Your Server URL (the url of your netlify project)"
+  SERVER_URL = "Your Server URL (the URL of your Netlify project, you can configure after project is created)"

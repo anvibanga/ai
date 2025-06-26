@@ -1,11 +1,11 @@
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import cors from "cors";
 import path from 'path';
 import serverless from "serverless-http";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { AuthInfo } from "@modelcontextprotocol/sdk/server/auth/types.js";
-import { descopeMcpAuthRouter, descopeMcpBearerAuth } from "@descope/mcp-express";
+import { descopeMcpBearerAuth } from "@descope/mcp-express";
 import { createServer } from "./create-server.js";
 
 // Type declarations
